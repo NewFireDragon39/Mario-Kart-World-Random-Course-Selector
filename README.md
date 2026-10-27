@@ -20,10 +20,13 @@ Have you ever wanted to pick a random course in Mario Kart World without Routes?
 
 ## Requirements
 
-Executable:  
-Python 3.6+  
+**Python source (`exe-source.py`):**  
+Python 3.6+
 
-Shortcut:  
+**Windows and Linux executable:**  
+No separate Python installation required.
+
+**Apple Shortcut:**  
 iOS 12.0+, iPadOS 12.0+, macOS 12.0+ (Monterey or later), watchOS 7.0+*, visionOS 1.0+*
 
 >[!WARNING]
