@@ -38,11 +38,21 @@
                "Dry Bones Burnout",
                "Moo Moo Meadows",
                "Choco Mountain",
-               "Toad’s Factory",
-               "Bowser’s Castle",
+               "Toad's Factory",
+               "Bowser's Castle",
                "Acorn Heights",
                "Mario Circuit",
-               "Rainbow Road"
+               "Rainbow Road",
+               "SNES Mario Circuit 1",
+               "SNES Mario Circuit 2",
+               "SNES Mario Circuit 3",
+               "SNES Ghost Valley 1",
+               "SNES Ghost Valley ",
+               "SNES Ghost Valley 3",
+               "SNES Choco Island 1",
+               "SNES Choco Island 2",
+               "SNES Vanilla Lake 1",
+               "SNES Koopa Beach 1"
             ],
             "UUID": "E9FE8549-AFFC-45F6-BD62-36FB85390A2D"
          }
