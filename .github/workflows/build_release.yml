@@ -1,0 +1,83 @@
+name: Build Mario Kart World Random Course Selector Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to use for the draft release (example: v1.0.1). Leave blank to auto-generate one.'
+        required: false
+        default: ''
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: Mario_Kart_World_Random_Course_Selector.exe
+            build_command: |
+              python -m PyInstaller --onefile --name "Mario_Kart_World_Random_Course_Selector" exe-source.py
+              Copy-Item -Path "dist\Mario_Kart_World_Random_Course_Selector.exe" -Destination "Mario_Kart_World_Random_Course_Selector.exe"
+
+          - os: ubuntu-latest
+            artifact_name: Mario_Kart_World_Random_Course_Selector-Linux
+            build_command: |
+              python -m PyInstaller --onefile --name "Mario_Kart_World_Random_Course_Selector" exe-source.py
+              cp dist/Mario_Kart_World_Random_Course_Selector Mario_Kart_World_Random_Course_Selector-Linux
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build executable
+        shell: bash
+        run: ${{ matrix.build_command }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}
+          if-no-files-found: error
+
+  release:
+    name: Publish draft release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare asset files
+        run: |
+          mkdir -p release-assets
+          find artifacts -type f \( -name 'Mario_Kart_World_Random_Course_Selector.exe' -o -name 'Mario_Kart_World_Random_Course_Selector-Linux' \) -exec cp {} release-assets/ \;
+          ls -l release-assets
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: release-assets/*
+          tag_name: ${{ github.event.inputs.tag || github.ref_name || format('v{0}', github.run_number) }}
+          name: ${{ github.event.inputs.tag || github.ref_name || format('v{0}', github.run_number) }}
+          generate_release_notes: true
