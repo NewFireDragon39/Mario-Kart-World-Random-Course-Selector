@@ -21,12 +21,14 @@ jobs:
         include:
           - os: windows-latest
             artifact_name: Mario_Kart_World_Random_Course_Selector.exe
+            shell: pwsh
             build_command: |
               python -m PyInstaller --onefile --name "Mario_Kart_World_Random_Course_Selector" exe-source.py
               Copy-Item -Path "dist\Mario_Kart_World_Random_Course_Selector.exe" -Destination "Mario_Kart_World_Random_Course_Selector.exe"
 
           - os: ubuntu-latest
             artifact_name: Mario_Kart_World_Random_Course_Selector-Linux
+            shell: bash
             build_command: |
               python -m PyInstaller --onefile --name "Mario_Kart_World_Random_Course_Selector" exe-source.py
               cp dist/Mario_Kart_World_Random_Course_Selector Mario_Kart_World_Random_Course_Selector-Linux
@@ -44,7 +46,7 @@ jobs:
         run: python -m pip install --upgrade pip pyinstaller
 
       - name: Build executable
-        shell: bash
+        shell: ${{ matrix.shell }}
         run: ${{ matrix.build_command }}
 
       - name: Upload build artifact
