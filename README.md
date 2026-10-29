@@ -13,7 +13,7 @@
   </a>
 </p>
 
-Have you ever wanted to pick a random course in Mario Kart World without [Routes](https://www.mariowiki.com/Route)? Well now you can!
+Have you ever wanted to pick a random course in Mario Kart World without [Routes](https://www.mariowiki.com/Route)? Well, now you can!
 
 > [!IMPORTANT]
 >Mario Kart World is a video game developed and published by Nintendo. Mario Kart World Random Course Selector is not affiliated in any way with Mario Kart World or Nintendo. Mario Kart World is a registered trademark of Nintendo of America Inc.
